@@ -33,11 +33,39 @@ const averageMonthlyKWH = {
   NU: 301.67,
 };
 
-//got average cost from 200W monochrystalline panels - https://www.homedepot.com/b/Electrical-Renewable-Energy-Solar-Panels/N-5yc1vZcdrk
+//got average cost for 200W monochrystalline panels from - https://www.homedepot.com/b/Electrical-Renewable-Energy-Solar-Panels/N-5yc1vZcdrk
 //average production per day from - https://www.yesenergysolutions.co.uk/advice/how-much-energy-solar-panels-produce-home#:~:text=Most%20residential%20solar%20panels%20on,1%20kW%20and%204%20kW.
 const solarPanelData = {
   AVGproductionPerDay: 2,
   AVGcostPerPanel: 360,
+};
+
+// incentives fro federal from - https://www.nrcan.gc.ca/energy-efficiency/homes/canada-greener-homes-grant/start-your-energy-efficient-retrofits/plan-document-and-complete-your-home-retrofits/eligible-grants-for-my-home-retrofit/23504#s6
+//incentives for provincial from - https://solar-x.ca/solar-incentives-and-rebates-canada/
+//incentive for QC from - https://stardustsolar.com/quebec-solar-pv-incentive-programs/
+//incentive for SK from - https://prairiesunsolar.com/solar-incentives/sk/
+//incentive for MB from - https://www.gov.mb.ca/sd/environment_and_biodiversity/energy/initiatives/solar/incentives.html
+//incentive for NL from - https://prairiesunsolar.com/solar-incentives/nl/
+//incentive for NT from - https://www.energyhub.org/northwest-territories/#:~:text=The%20largest%20solar%20rebate%20program,maximum%20rebate%20amount%20of%20%2420%2C000.
+//incentive for YT from - https://www.solacity.com/solar-rebates-and-incentives-in-canada/#:~:text=Yukon%20Good%20Energy%20Residential%20Incentives%20Program&text=The%20program%20offers%20an%20%240.80,local%20electrical%20utility%20will%20allow.
+//incentive for NU from - https://prairiesunsolar.com/solar-incentives/nvt/
+
+const incentives = {
+  Federal:
+    "Up to 5000$ for project costs and up to 600$ for home evaluations. Additionally an interest-free loan: up to $40,000, with a repayment term of 10 years",
+  ON: "Ontario lacks a centralized solar incentive or financing program, though a few targeted incentives are available. The First Nations Conservation Program, for example, offers free efficiency upgrades for on-reserve customers.",
+  QC: "A new 20% tax credit offered by Revenu Quebec changes the picture, bringing down the cost significantly.",
+  BC: "British Columbia currently has no provincial rebate incentive for solar installations; however, there is a provincial exemption from the sales tax(...). [T]here are several regional solar incentives that fill the place of a centralized program.",
+  AB: "Generally speaking, most localities throughout Alberta that offer a solar incentive set it around $0.70/watt, with a maximum of $5,000 in savings",
+  MB: "Purchasers who install specified solar heating equipment in Manitoba will qualify for a refundable 10% Green Energy Equipment Tax Credit on the eligible capital costs.",
+  SK: "Saskatchewan homeowners may save up to $2,100 in provincial income tax by claiming a 10.5 per cent tax credit on up to $20,000 of eligible home renovation expenses. Eligible expenses include the cost of labour and professional services, building materials, fixtures, on solar energy rentals, and permits.",
+  NS: "Nova Scotian homeowners can claim a rebate of $0.60/watt of solar panels installed, up to a maximum of $6,000 or 25% of the total pre-tax system cost",
+  NB: "The Total Home Energy Savings Program (THESP) is run by Energie NB Power and offers a rebate that ranges from $0.20/watt to $0.30/watt of solar energy installed.",
+  NL: "Home Energy Savings Program (HESP) - The Newfoundland & Labrador Housing Corporation currently offers a grant of up to $5,000 for energy efficiency upgrades to residents whose annual household income equals $32,500 or less. Homeowners must currently have diesel-generated electricity or use 1,000+ litres of oil annually.",
+  PE: "PEI’s Solar Electric Rebate Program is administered by EfficiencyPEI and allows homeowners to claim a cash rebate of $1.00/watt, up to a maximum of $10,000 in savings",
+  NT: "The Alternative Energy Technologies Program (AETP) allows property owners to receive a 50% rebate on the total cost a solar system including installation up to a maximum rebate amount of $20,000. However, funding is not available for on-grid buildings that use hydroelectricity.",
+  YT: "The Yukon Good Energy Residential Incentives Program offers an $0.80 per Watt rebate up to a maximum of $5,000 per system per year. For solar systems the size limit is up to 50 kW or the smaller of what the local electrical utility will allow.",
+  NU: "Renewable Energy Home Improvements Program (in progress) – The Nunavut government has announced the development of a program offering a 50% rebate to homeowners installing renewable energy home improvements. The Nunavut government has also announced that the remainder of their budget following the Renewable Energy Home Improvements Program will go towards administering rebates up to $5,000 for renewable energy improvements on cabins specifically.",
 };
 
 //data about household items and their monthly averages from - https://www.burlingtonhydro.com/powertoconserve/residential/appliance-usage.html
@@ -167,4 +195,5 @@ const productData = {
     { name: "Smartphone", kWh: 0.0003, avgPerMonth: 150 },
   ],
 };
-module.exports = { costPerKWH, averageMonthlyKWH };
+
+module.exports = { costPerKWH, averageMonthlyKWH, productData };
