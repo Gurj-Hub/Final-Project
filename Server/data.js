@@ -17,7 +17,7 @@ const costPerKWH = {
 };
 // from https://www.cer-rec.gc.ca/en/data-analysis/energy-markets/market-snapshots/2017/market-snapshot-greenhouse-gas-emissions-associated-with-residential-electricity-consumption-vary-significantly-province-territory.html
 const averageMonthlyKWH = {
-  AVG: 0000,
+  AVG: 392.24,
   ON: 285,
   QC: 673.3,
   BC: 294.17,
@@ -196,4 +196,10 @@ const productData = {
   ],
 };
 
-module.exports = { costPerKWH, averageMonthlyKWH, productData };
+module.exports = {
+  costPerKWH,
+  averageMonthlyKWH,
+  incentives,
+  productData,
+  solarPanelData,
+};
