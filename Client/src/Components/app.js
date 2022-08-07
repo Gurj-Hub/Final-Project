@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
-
+import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import About from "./About";
@@ -22,7 +22,7 @@ const App = () => {
             {/* <Route path="/" element={<HomeFeed />} /> */}
           </Routes>
         </Container>
-        <Footer />
+        {/* <Footer /> */}
       </Wrapper>
     </Router>
   );

@@ -6,11 +6,11 @@ const NavBar = () => {
   return (
     <Wrapper>
       <Nav>
-        <Options to="/fitness">Fitness</Options>
-        <Options to="/lifestyle">Lifestyle</Options>
-        <Options to="/entertainment">Entertainment</Options>
-        <Options to="/medical">Medical</Options>
-        <Options to="/other">Other</Options>
+        <Options to="/fitness">Option 1</Options>
+        <Options to="/lifestyle">Option 2</Options>
+        <Options to="/entertainment">Option 3</Options>
+        <Options to="/medical">Option 4</Options>
+        <Options to="/other">Option 5</Options>
       </Nav>
     </Wrapper>
   );

@@ -9,6 +9,7 @@ const Header = () => {
   return <Wrapper> This is the HEADER!</Wrapper>;
 };
 
+export default Header;
 const Wrapper = styled.div`
   height: 80px;
   width: 100%;
