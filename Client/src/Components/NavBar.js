@@ -14,12 +14,18 @@ const NavBar = () => {
         <Options onClick={() => setHeader("Abundance")} to="/abundance">
           Abundance
         </Options>
+      </Nav>
+      <Nav>
         <Options onClick={() => setHeader("Efficiency")} to="/efficiency">
           Efficiency
         </Options>
+      </Nav>
+      <Nav>
         <Options onClick={() => setHeader("Cost")} to="/cost">
           Cost
         </Options>
+      </Nav>
+      <Nav>
         <Options onClick={() => setHeader("Other")} to="/other">
           Other
         </Options>
@@ -35,8 +41,6 @@ const Wrapper = styled.div`
   justify-content: center;
   color: white;
   font-weight: bold;
-  /* background: var(--color-navbar-beige); */
-  box-shadow: 1px 6px 6px -6px gray;
   width: 100%;
 `;
 
@@ -44,6 +48,7 @@ const Nav = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  height: 40px;
   background-color: black;
   border-bottom: 1px solid white;
   border-top: 1px solid white;
@@ -51,24 +56,18 @@ const Nav = styled.div`
 
 const Options = styled(NavLink)`
   background-color: transparent;
+  height: 20px;
   font-size: 15px;
-  border: none;
-  display: flex;
   text-align: center;
   padding: 10px 20px;
   cursor: pointer;
   color: white;
-  opacity: 1;
   text-decoration: none;
 
   &:hover {
     color: yellowgreen;
-    opacity: 1;
-    border-bottom: 1px solid black;
   }
-
   &.active {
     color: rgb(102, 255, 153);
-    opacity: 1;
   }
 `;

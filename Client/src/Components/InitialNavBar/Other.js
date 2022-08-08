@@ -8,23 +8,7 @@ const Other = () => {
   return (
     <>
       <Div> Unsure of what I should put here... </Div>
-      <Container>
-        {/* <Img src={decrease}></Img>
-        <Img src={prediction}></Img> */}
-      </Container>
-      {/* <Div>
-          <Button onClick={() => navigate("/abundance")}>
-            {" "}
-            <AiFillLeftCircle style={{ height: "30px", width: "30px" }}>
-              {" "}
-            </AiFillLeftCircle>
-          </Button>
-          <Button onClick={() => navigate("/cost")}>
-            <AiFillRightCircle style={{ height: "30px", width: "30px" }}>
-              {" "}
-            </AiFillRightCircle>
-          </Button>
-        </Div> */}
+      <Container></Container>
     </>
   );
 };

@@ -9,15 +9,17 @@ const Footer = () => {
 
   if (header === "Abundance" || "Efficiency" || "Cost" || "Applications") {
     return (
-      <Div
-        onClick={() => {
-          sessionStorage.setItem("header", "Homepage");
-          setHeader("Homepage");
-          console.log(header);
-        }}
-        to="/Homepage"
-      >
-        Continue to the Homepage
+      <Div>
+        <Link
+          onClick={() => {
+            sessionStorage.setItem("header", "Homepage");
+            setHeader("Homepage");
+            console.log(header);
+          }}
+          to="/Homepage"
+        >
+          Continue to the Homepage
+        </Link>
       </Div>
     );
   } else {
@@ -26,14 +28,17 @@ const Footer = () => {
 };
 
 export default Footer;
-
-const Div = styled(NavLink)`
+const Div = styled.div`
   display: flex;
   justify-content: right;
+  align-items: center;
+`;
+const Link = styled(NavLink)`
   text-align: right;
   color: white;
   text-decoration: none;
   width: fit-content;
+  padding-right: 20px;
 
   &:hover {
     color: rgb(102, 255, 153);

@@ -34,7 +34,7 @@ const getAllProducts = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
   } finally {
     client.close();
   }
@@ -68,7 +68,7 @@ const getAllIncentives = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
   } finally {
     client.close();
   }
@@ -103,7 +103,7 @@ const getMonthlyConsumption = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
   } finally {
     client.close();
   }
@@ -139,7 +139,7 @@ const getSolarPanelData = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
   } finally {
     client.close();
   }
@@ -175,7 +175,7 @@ const getCostPerKWH = async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
   } finally {
     client.close();
   }

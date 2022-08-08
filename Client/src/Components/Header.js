@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useState, useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
+import logo from "../N4S logo.png";
 
 const Header = () => {
   // const [screenWidth, setScreenWidth] = useState(window.screen.width);
@@ -22,12 +23,47 @@ const Header = () => {
   if (header === "Other") {
     return <PopUp4> Many More Benefits</PopUp4>;
   } else {
-    return null;
+    return (
+      <Container>
+        <Wrap>
+          <Img src={logo}></Img>
+          <Title>N4S : Need For Solar</Title>
+        </Wrap>
+        <Login>How do I send to - Login In - ?</Login>
+      </Container>
+    );
   }
 };
 
 export default Header;
 
+const Wrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  margin: 10px;
+`;
+const Img = styled.img`
+  width: 70px;
+  border-radius: 50%;
+`;
+
+const Login = styled.span`
+  font-size: 20px;
+  padding-right: 15px;
+`;
+
+const Title = styled.span`
+  font-size: 20px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
 const fade = keyframes`
         0% {
             opacity: 0;
@@ -41,15 +77,16 @@ const fade = keyframes`
     `;
 
 const Wrapper = styled.div`
-  height: 80px;
+  height: 40px;
   width: 100%;
   display: flex;
   align-items: center;
-  min-height: 48px;
   color: white;
   font-size: 30px;
   font-family: Lucida Console;
   animation: ${fade} 3000ms forwards;
+  margin-bottom: 15px;
+  margin-top: 15px;
 `;
 
 const pop = keyframes`
@@ -67,10 +104,12 @@ const PopUp = styled.div`
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 80px;
+  height: 40px;
   margin: auto;
   font-family: Lucida Console;
   animation: ${pop} 600ms forwards;
+  margin-bottom: 15px;
+  margin-top: 15px;
 `;
 
 const PopUp2 = styled.div`
@@ -78,28 +117,34 @@ const PopUp2 = styled.div`
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 80px;
+  height: 40px;
   margin: auto;
   font-family: Lucida Console;
   animation: ${pop} 600ms forwards;
+  margin-bottom: 15px;
+  margin-top: 15px;
 `;
 const PopUp3 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 80px;
+  height: 40px;
   margin: auto;
   font-family: Lucida Console;
   animation: ${pop} 600ms forwards;
+  margin-bottom: 15px;
+  margin-top: 15px;
 `;
 const PopUp4 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 80px;
+  height: 40px;
   margin: auto;
   font-family: Lucida Console;
+  margin-bottom: 15px;
+  margin-top: 15px;
   animation: ${pop} 600ms forwards;
 `;

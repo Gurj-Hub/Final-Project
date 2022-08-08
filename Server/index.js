@@ -1,7 +1,7 @@
 const express = require("express");
 
 require("dotenv").config();
-
+const morgan = require("morgan");
 const { auth, requiresAuth } = require("express-openid-connect");
 
 const {
@@ -12,7 +12,7 @@ const {
   getCostPerKWH,
 } = require("./handlers");
 
-const PORT = 3000;
+const PORT = 4000;
 
 express()
   //----------------------------------------------------------
@@ -44,6 +44,10 @@ express()
       idpLogout: true,
     })
   )
+  //----------------------------------------------------------
+  //'initializing' Morgan
+  //----------------------------------------------------------
+  .use(morgan("tiny"))
 
   //----------------------------------------------------------
   //Endpoints
@@ -60,12 +64,15 @@ express()
   //gets data for solar panels ie. cost, production rate
   .get("/solarPanelData", getSolarPanelData)
   // checking for user authentification - subject to change
-  .get("/", (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+  .get("/log", (req, res) => {
+    res.status(200).json({
+      status: 200,
+      data: req.oidc.isAuthenticated() ? "Logged in" : "Logged out",
+    });
   })
   //to check if a user is logged in
   .get("/profile", requiresAuth(), (res, req) => {
-    console.log(req.req.oidc.user);
+    console.log(req.oidc.user);
     res.send(JSON.stringify(req.oidc.user));
   })
   // catch all other endpoint

@@ -3,13 +3,13 @@ import { ProductDataContext } from "./ProductDataContext";
 import styled, { keyframes } from "styled-components";
 import { FiLoader } from "react-icons/fi";
 
-const Homepage = () => {
+const HomepageOut = () => {
   const { costPerkWh, monthlyConsumption } = useContext(ProductDataContext);
 
   return <Wrapper> Homepage </Wrapper>;
 };
 
-export default Homepage;
+export default HomepageOut;
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,4 +20,5 @@ const Wrapper = styled.div`
   padding-right: 80px;
   justify-content: center;
   align-items: center;
+  border-top: 2px solid white;
 `;
