@@ -1,13 +1,24 @@
 import { createContext, useEffect, useState } from "react";
 
-export const ProducDataContext = createContext(null);
+export const ProductDataContext = createContext(null);
 
-export const ProducDataProvider = ({ children }) => {
+export const ProductDataProvider = ({ children }) => {
+  // sets state of header depending on session storage
+  const headerState = sessionStorage.getItem("header");
+  //stores all of the energy consuming products inside db
   const [allProducts, setAllProducts] = useState(null);
+  //stores the cost per kWh per region in Canada
   const [costPerKWH, setCostPerKWH] = useState(null);
+  //stores the incentives based on the region in Canada
   const [incentives, setIncentives] = useState(null);
+  //stores info. about cost and panel production rate
   const [panelData, setPanelData] = useState(null);
+  //stores the avg residential consumption based on region
   const [monthlyConsumption, setMonthlyConsumption] = useState(null);
+  //store route to set proper header based on state
+  const [header, setHeader] = useState(
+    headerState === "Homepage" ? "Homepage" : "WHY"
+  );
 
   //get all incentives
   useEffect(() => {
@@ -47,7 +58,7 @@ export const ProducDataProvider = ({ children }) => {
 
   //get monthly residential consumption for all regions
   useEffect(() => {
-    fetch("//monthlyConsumption")
+    fetch("/monthlyConsumption")
       .then((res) => res.json())
       .then((data) => {
         setMonthlyConsumption(data.data);
@@ -55,7 +66,7 @@ export const ProducDataProvider = ({ children }) => {
   }, []);
 
   return (
-    <ItemsDataContext.Provider
+    <ProductDataContext.Provider
       value={{
         allProducts,
         setAllProducts,
@@ -67,9 +78,11 @@ export const ProducDataProvider = ({ children }) => {
         setPanelData,
         monthlyConsumption,
         setMonthlyConsumption,
+        header,
+        setHeader,
       }}
     >
       {children}
-    </ItemsDataContext.Provider>
+    </ProductDataContext.Provider>
   );
 };
