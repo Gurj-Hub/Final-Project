@@ -1,7 +1,5 @@
 import { useContext, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { AiFillRightCircle } from "react-icons/ai";
-import { AiFillLeftCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import efficiency from "../../efficiency.gif";
 
@@ -18,19 +16,6 @@ const Efficiency = () => {
       <Container>
         <Img src={efficiency}></Img>
       </Container>
-      {/* <Div>
-        <Button onClick={() => navigate("/abundance")}>
-          {" "}
-          <AiFillLeftCircle style={{ height: "30px", width: "30px" }}>
-            {" "}
-          </AiFillLeftCircle>
-        </Button>
-        <Button onClick={() => navigate("/cost")}>
-          <AiFillRightCircle style={{ height: "30px", width: "30px" }}>
-            {" "}
-          </AiFillRightCircle>
-        </Button>
-      </Div> */}
     </>
   );
 };

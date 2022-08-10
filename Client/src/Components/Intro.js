@@ -54,7 +54,8 @@ const Div = styled.div`
   color: white;
   opacity: 0;
   width: 100vw;
-  animation: ${upAndDown} 1000ms infinite 3000ms forwards;
+  animation: ${upAndDown} 1000ms infinite 4000ms forwards;
+  margin-bottom: 15px;
 `;
 
 const Container = styled.div`

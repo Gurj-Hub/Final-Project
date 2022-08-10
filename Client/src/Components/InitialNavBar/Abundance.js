@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { AiFillRightCircle } from "react-icons/ai";
+
 import tooMuch from "../../abundance.png";
 
 const Abundance = () => {
@@ -14,14 +14,7 @@ const Abundance = () => {
         Roughly, 10 000 times the worlds total energy use.{" "}
       </Div>
       <Img src={tooMuch}></Img>
-      <Div>
-        {/* <Button onClick={() => navigate("/efficiency")}>
-          {" "}
-          <AiFillRightCircle style={{ height: "30px", width: "30px" }}>
-            {" "}
-          </AiFillRightCircle>
-        </Button> */}
-      </Div>
+      <Div></Div>
     </>
   );
 };

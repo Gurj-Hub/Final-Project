@@ -2,11 +2,12 @@ import styled, { keyframes } from "styled-components";
 import { NavLink } from "react-router-dom";
 import { useState, useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
+import { UserDataContext } from "./UserDataContext";
 import logo from "../N4S logo.png";
 
 const Header = () => {
-  // const [screenWidth, setScreenWidth] = useState(window.screen.width);
   const { header } = useContext(ProductDataContext);
+  const { loggedIn } = useContext(UserDataContext);
   console.log(header);
   if (header === "WHY") {
     return <Wrapper> Why Should You Consider Solar?</Wrapper>;
@@ -27,7 +28,9 @@ const Header = () => {
       <Container>
         <Wrap>
           <Img src={logo}></Img>
-          <Title>N4S : Need For Solar</Title>
+          <Title>
+            <Span>N4S </Span>: Need For Solar
+          </Title>
         </Wrap>
         <Login>How do I send to - Login In - ?</Login>
       </Container>
@@ -54,6 +57,12 @@ const Login = styled.span`
   padding-right: 15px;
 `;
 
+const Span = styled.span`
+  font-weight: 700;
+  font-size: 22px;
+  color: rgb(255, 133, 51);
+`;
+
 const Title = styled.span`
   font-size: 20px;
 `;
@@ -72,7 +81,7 @@ const fade = keyframes`
 
         100% {
           opacity: 1;
-          transform: translateX(36%)
+          transform: translateX(34%)
         }
     `;
 
@@ -82,8 +91,9 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   color: white;
-  font-size: 30px;
+  font-size: 34px;
   font-family: Lucida Console;
+  font-weight: 700;
   animation: ${fade} 3000ms forwards;
   margin-bottom: 15px;
   margin-top: 15px;

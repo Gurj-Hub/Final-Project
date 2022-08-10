@@ -4,7 +4,7 @@ export const UserDataContext = createContext(null);
 
 export const UserDataProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-
+  const [storedItems, setStoredItems] = useState(null);
   //checking if somebody is logged in with localStorage
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user")) !== null) {
@@ -17,6 +17,8 @@ export const UserDataProvider = ({ children }) => {
       value={{
         loggedIn,
         setLoggedIn,
+        storedItems,
+        setStoredItems,
       }}
     >
       {children}

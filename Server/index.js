@@ -64,17 +64,22 @@ express()
   //gets data for solar panels ie. cost, production rate
   .get("/solarPanelData", getSolarPanelData)
   // checking for user authentification - subject to change
-  .get("/log", (req, res) => {
-    res.status(200).json({
-      status: 200,
-      data: req.oidc.isAuthenticated() ? "Logged in" : "Logged out",
-    });
-  })
-  //to check if a user is logged in
-  .get("/profile", requiresAuth(), (res, req) => {
-    console.log(req.oidc.user);
-    res.send(JSON.stringify(req.oidc.user));
-  })
+  //   .get("/log", (req, res) => {
+  //     res.status(200).json({
+  //       status: 200,
+  //       data: req.oidc.isAuthenticated() ? "Logged in" : "Logged out",
+  //     });
+  //   })
+  //   //to check if a user is logged in
+  //   .get("/profile", requiresAuth(), (res, req) => {
+  //     console.log(req.oidc.user);
+  //     res.send(JSON.stringify(req.oidc.user));
+  //   })
+
+  //POSTS user to Users collection
+  //PATCHes User collection with saved location/saved products/changed costPerKWH
+  //GETs the users info on login
+
   // catch all other endpoint
   .get("*", (req, res) => res.status(404).json("You lost in the sauce."))
 
