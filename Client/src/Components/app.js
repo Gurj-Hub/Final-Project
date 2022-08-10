@@ -4,14 +4,15 @@ import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import HomepageOut from "./Homepage-OUT";
-import HomepageIn from "./Homepage-OUT";
 import Intro from "./Intro";
 import Abundance from "./InitialNavBar/Abundance";
 import Efficiency from "./InitialNavBar/Efficiency";
 import Cost from "./InitialNavBar/Cost";
 import Other from "./InitialNavBar/Other";
-import { useState, useContext } from "react";
+import HomepageOut from "./Homepage-OUT";
+import HomepageIn from "./Homepage-OUT";
+import Calculator from "./Calculator";
+import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/efficiency" element={<Efficiency />} />
             <Route path="/cost" element={<Cost />} />
             <Route path="/other" element={<Other />} />
+            <Route path="/calculator" element={<Calculator />} />
             <Route
               path="/Homepage"
               element={loggedIn ? <HomepageIn /> : <HomepageOut />}

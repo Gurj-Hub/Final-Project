@@ -170,7 +170,7 @@ const Prompt = styled.div`
   &:hover {
     background-color: hsl(180, 100%, 40%);
   }
-  animation: ${show} 1400ms 4000ms backwards;
+  animation: ${show} 1800ms 5000ms backwards;
 `;
 
 const CostOuput = styled.div``;

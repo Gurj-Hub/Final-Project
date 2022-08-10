@@ -1,10 +1,7 @@
-import { useContext, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate } from "react-router-dom";
 import efficiency from "../../efficiency.gif";
 
 const Efficiency = () => {
-  const navigate = useNavigate();
   return (
     <>
       <Div>
@@ -23,15 +20,6 @@ export default Efficiency;
 
 const Container = styled.div`
   display: flex;
-`;
-const Button = styled.div`
-  display: flex;
-  justify-content: center;
-  width: fit-content;
-
-  &:hover {
-    color: rgb(102, 255, 153);
-  }
 `;
 const Div = styled.div`
   display: flex;
