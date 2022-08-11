@@ -11,44 +11,36 @@ const Calculator = () => {
   const { logged } = useContext(UserDataContext);
   //make an array to map over to create rows for appliances
   const [arr, setArr] = useState(new Array(10).fill(1));
-  //make a copy of previous array to make modifications
-  const [copyArr, setCopyArr] = useState([...arr]);
-  //state to store modified array so fields in the same row can get fata on what appliance was selected
-  const [state, setState] = useState(null);
-
   //to navigate to solar breakdown + incentive page
   const navigate = useNavigate();
   // for storing kWh total
   let total = 0;
 
-  // to add 'select' field at beginning of select tag
-  useEffect(() => {
-    allProducts.unshift({
-      name: "Select",
-      kWh: 0,
-      avgPerMonth: 0,
-    });
-  }, []);
-
   // to set monthly consumption everytime a change is made
   useEffect(() => {
-    if (state !== null) {
-      for (let x = 0; x < state?.length; x++) {
-        total += state[x][0]?.avgPerMonth * state[x][0]?.kWh;
+    if (arr !== null) {
+      for (let x = 0; x < arr?.length; x++) {
+        if (typeof arr[x] !== "number") {
+          total += arr[x]?.avgPerMonth * arr[x]?.kWh;
+        }
       }
+      console.log(total);
     }
     setMonthlyKWH(total);
-  });
+  }, [arr]);
 
   //returns object of element that was selected on select tag -> allows to give data to other fields in same row
-  const HandleChange = (param) => {
-    const filtered = allProducts.filter((element) => {
-      return element.name === param;
+  const HandleChange = (name, index) => {
+    const filtered = allProducts.find((element) => {
+      return element.name === name;
     });
-    return filtered;
+
+    let copyArr = [...arr];
+    copyArr[index] = filtered;
+    setArr(copyArr);
   };
 
-  if (arr !== null && copyArr !== null) {
+  if (arr !== null && allProducts !== null) {
     return (
       <>
         <PageTitle> Solar Load Calculator </PageTitle>
@@ -59,19 +51,18 @@ const Calculator = () => {
             <TimeConsumedTitle>Hours Used/Day</TimeConsumedTitle>
             <TotalTitle>kW/h Per Day</TotalTitle>
           </TitleContainer>
-          {arr.map((element, index) => {
+          {arr?.map((element, index) => {
             return (
               <>
                 <TitleContainer>
                   <ApplianceContainer>
                     <Select
                       onChange={(ev) => {
-                        copyArr[index] = HandleChange(ev.target.value);
-                        setState(copyArr);
-                        state !== null && console.log(state);
-                        console.log(total);
+                        HandleChange(ev.target.value, index);
                       }}
                     >
+                      {" "}
+                      <Option>Select</Option>
                       {allProducts.map((element, index) => {
                         return (
                           <Option value={element.name}>{element.name}</Option>
@@ -80,18 +71,20 @@ const Calculator = () => {
                     </Select>
                   </ApplianceContainer>
                   <ConsumptionContainer>
-                    {state !== null && state[index][0]?.kWh}
+                    {typeof arr[index] !== "number" ? arr[index]?.kWh : 0}
                   </ConsumptionContainer>
                   <TimeConsumedContainer>
-                    {state !== null &&
-                      (state[index][0]?.avgPerMonth / 30).toPrecision(5)}
+                    {typeof arr[index] !== "number"
+                      ? (arr[index]?.avgPerMonth / 30).toPrecision(5)
+                      : 0}
                   </TimeConsumedContainer>
                   <TotalContainer>
-                    {state !== null &&
-                      (
-                        (state[index][0]?.kWh * state[index][0]?.avgPerMonth) /
-                        30
-                      ).toPrecision(5)}
+                    {typeof arr[index] !== "number"
+                      ? (
+                          (arr[index]?.kWh * arr[index]?.avgPerMonth) /
+                          30
+                        ).toPrecision(5)
+                      : 0}
                   </TotalContainer>
                 </TitleContainer>
               </>
@@ -109,7 +102,7 @@ const Calculator = () => {
           </ResultContainer>
           <ResultContainer>
             <ResultDescription>Kilowatt Hours Per Month</ResultDescription>
-            <Result>21</Result>
+            <Result>{total}</Result>
           </ResultContainer>
         </Container>
         {monthlyKWH !== 0 && (
@@ -293,7 +286,7 @@ const ConsumptionContainer = styled.div`
   width: 140px;
   height: 40px;
   margin-top: 10px;
-  /* background-color: grey; */
+  background-color: rgb(31, 31, 46);
   border: 2px solid rgb(255, 102, 0);
 `;
 
@@ -314,7 +307,7 @@ const TimeConsumedContainer = styled.div`
   width: 200px;
   height: 40px;
   margin-top: 10px;
-  /* background-color: grey; */
+  background-color: rgb(31, 31, 46);
   border: 2px solid rgb(255, 102, 0);
 `;
 
@@ -335,6 +328,6 @@ const TotalContainer = styled.div`
   width: 160px;
   height: 40px;
   margin-top: 10px;
-  /* background-color: grey; */
+  background-color: rgb(31, 31, 46);
   border: 2px solid rgb(255, 102, 0);
 `;
