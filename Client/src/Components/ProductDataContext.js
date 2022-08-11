@@ -19,6 +19,8 @@ export const ProductDataProvider = ({ children }) => {
   const [header, setHeader] = useState(
     headerState === "Homepage" ? "Homepage" : "WHY"
   );
+  //stores calculator kW/h/month for breakdown page
+  const [monthlyKWH, setMonthlyKWH] = useState(0);
 
   //get all incentives
   useEffect(() => {
@@ -80,6 +82,8 @@ export const ProductDataProvider = ({ children }) => {
         setMonthlyConsumption,
         header,
         setHeader,
+        monthlyKWH,
+        setMonthlyKWH,
       }}
     >
       {children}

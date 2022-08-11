@@ -12,6 +12,7 @@ import Other from "./InitialNavBar/Other";
 import HomepageOut from "./Homepage-OUT";
 import HomepageIn from "./Homepage-OUT";
 import Calculator from "./Calculator";
+import Breakdown from "./Breakdown";
 import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/cost" element={<Cost />} />
             <Route path="/other" element={<Other />} />
             <Route path="/calculator" element={<Calculator />} />
+            <Route path="/breakdown" element={<Breakdown />} />
             <Route
               path="/Homepage"
               element={loggedIn ? <HomepageIn /> : <HomepageOut />}
