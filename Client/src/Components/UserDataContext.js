@@ -6,6 +6,8 @@ export const UserDataProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(true);
   //stores data about appliances for calculator
   const [savedData, setSavedData] = useState(null);
+  //stores user location
+  const [location, setLocation] = useState(null);
 
   //checking if somebody is logged in with localStorage
   useEffect(() => {
@@ -28,6 +30,8 @@ export const UserDataProvider = ({ children }) => {
         loggedIn,
         savedData,
         setSavedData,
+        location,
+        setLocation,
       }}
     >
       {children}
