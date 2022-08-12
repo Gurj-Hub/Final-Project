@@ -2,15 +2,21 @@ import { useContext, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
-import { FiLoader } from "react-icons/fi";
+import { FiLoader, FiRefreshCcw } from "react-icons/fi";
+import { AiOutlineSave } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 const Calculator = () => {
+  const { loggedIn, savedData, setSavedData } = useContext(UserDataContext);
   const { allProducts, monthlyKWH, setMonthlyKWH } =
     useContext(ProductDataContext);
   const { logged } = useContext(UserDataContext);
   //make an array to map over to create rows for appliances
-  const [arr, setArr] = useState(new Array(10).fill(1));
+  const [arr, setArr] = useState(
+    localStorage.getItem("items") === null
+      ? new Array(10).fill(1)
+      : JSON.parse(localStorage.getItem("items"))
+  );
   //to navigate to solar breakdown + incentive page
   const navigate = useNavigate();
   // for storing kWh total
@@ -20,11 +26,10 @@ const Calculator = () => {
   useEffect(() => {
     if (arr !== null) {
       for (let x = 0; x < arr?.length; x++) {
-        if (typeof arr[x] !== "number") {
+        if (typeof arr[x] === "object") {
           total += arr[x]?.avgPerMonth * arr[x]?.kWh;
         }
       }
-      console.log(total);
     }
     setMonthlyKWH(total);
   }, [arr]);
@@ -38,6 +43,17 @@ const Calculator = () => {
     let copyArr = [...arr];
     copyArr[index] = filtered;
     setArr(copyArr);
+    setSavedData(arr);
+  };
+
+  //saves appliance data in state + storage and sends state to BE to store in db ********************************************************************************************************************
+  const HandleSave = () => {
+    setSavedData(arr);
+    localStorage.setItem("items", JSON.stringify(arr));
+    /* HAS TO DO A POST HERE TO STORE DATA ABOUT SAVED APPLIANCES FOR LOGGED IN USER 
+    if(logged) {
+    do fetch POST
+    }*/
   };
 
   if (arr !== null && allProducts !== null) {
@@ -62,24 +78,46 @@ const Calculator = () => {
                       }}
                     >
                       {" "}
-                      <Option>Select</Option>
-                      {allProducts.map((element, index) => {
-                        return (
-                          <Option value={element.name}>{element.name}</Option>
-                        );
-                      })}
+                      {localStorage.getItem("items") !== null ? (
+                        <Option selected>Select</Option>
+                      ) : (
+                        <Option selected>Select</Option>
+                      )}
+                      {localStorage.getItem("items") !== null
+                        ? allProducts.map((element, productIndex) => {
+                            if (arr[index]._id === element._id) {
+                              return (
+                                <Option value={arr[index].name} selected>
+                                  {arr[index].name}
+                                </Option>
+                              );
+                            } else {
+                              return (
+                                <Option value={element.name}>
+                                  {element.name}
+                                </Option>
+                              );
+                            }
+                          })
+                        : allProducts.map((element, productIndex) => {
+                            return (
+                              <Option value={element.name}>
+                                {element.name}
+                              </Option>
+                            );
+                          })}
                     </Select>
                   </ApplianceContainer>
                   <ConsumptionContainer>
-                    {typeof arr[index] !== "number" ? arr[index]?.kWh : 0}
+                    {typeof arr[index] === "object" ? arr[index]?.kWh : 0}
                   </ConsumptionContainer>
                   <TimeConsumedContainer>
-                    {typeof arr[index] !== "number"
+                    {typeof arr[index] === "object"
                       ? (arr[index]?.avgPerMonth / 30).toPrecision(5)
                       : 0}
                   </TimeConsumedContainer>
                   <TotalContainer>
-                    {typeof arr[index] !== "number"
+                    {typeof arr[index] === "object"
                       ? (
                           (arr[index]?.kWh * arr[index]?.avgPerMonth) /
                           30
@@ -96,14 +134,44 @@ const Calculator = () => {
           </AddRow>
         </Wrapper>
         <Container>
+          {monthlyKWH !== 0 && (
+            <SaveContainer>
+              <AiOutlineSave
+                style={{ height: "30px", width: "30px" }}
+              ></AiOutlineSave>
+              <SaveAppliances onClick={() => HandleSave()}>
+                {" "}
+                Save Your Appliances
+              </SaveAppliances>
+            </SaveContainer>
+          )}
+
           <ResultContainer>
-            <ResultDescription>Total Watt Hours Per Day</ResultDescription>
-            <Result>9+10</Result>
+            <ResultDescription>Total Kilowatt Hours Per Day</ResultDescription>
+            <Result>{(monthlyKWH / 30).toPrecision(5)}</Result>
           </ResultContainer>
           <ResultContainer>
-            <ResultDescription>Kilowatt Hours Per Month</ResultDescription>
-            <Result>{total}</Result>
+            <ResultDescription>
+              Total Kilowatt Hours Per Month
+            </ResultDescription>
+            <Result>{monthlyKWH.toPrecision(6)}</Result>
           </ResultContainer>
+          {monthlyKWH !== 0 && (
+            <ResetContainer>
+              <FiRefreshCcw
+                style={{ height: "30px", width: "30px" }}
+              ></FiRefreshCcw>
+              <ResetAppliances
+                onClick={() => {
+                  setArr(new Array(10).fill(1));
+                  localStorage.removeItem("items");
+                }}
+              >
+                {" "}
+                Reset Your Appliances
+              </ResetAppliances>
+            </ResetContainer>
+          )}
         </Container>
         {monthlyKWH !== 0 && (
           <Prompt onClick={() => navigate("/breakdown")}>
@@ -152,6 +220,50 @@ const Icon = styled.div`
   top: 49%;
   left: 49%;
   animation: ${turning} 1000ms infinite linear;
+`;
+
+const SaveAppliances = styled.div`
+  height: 60px;
+  width: 100px;
+  margin-top: 20px;
+`;
+
+const SaveContainer = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  width: 160px;
+  height: 60px;
+  font-size: 16px;
+  color: yellow;
+  background-color: transparent;
+  border: 1px solid green;
+  cursor: pointer;
+
+  &:hover {
+    background-color: hsl(180, 100%, 40%);
+  }
+`;
+
+const ResetAppliances = styled(SaveAppliances)``;
+
+const ResetContainer = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  width: 160px;
+  height: 60px;
+  font-size: 16px;
+  color: yellow;
+  background-color: transparent;
+  border: 1px solid green;
+  cursor: pointer;
+
+  &:hover {
+    background-color: hsl(180, 100%, 40%);
+  }
 `;
 
 const Prompt = styled.div`

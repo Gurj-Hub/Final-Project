@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 
-const Breakdown = () => {
+const Conversion = () => {
   return (
     <>
       <Div>
@@ -13,7 +13,7 @@ const Breakdown = () => {
     </>
   );
 };
-export default Breakdown;
+export default Conversion;
 
 const Container = styled.div`
   display: flex;

@@ -8,7 +8,7 @@ import logo from "../N4S logo.png";
 const Header = () => {
   const { header } = useContext(ProductDataContext);
   const { loggedIn } = useContext(UserDataContext);
-  console.log(header);
+
   if (header === "WHY") {
     return <Wrapper> Why Should You Consider Solar?</Wrapper>;
   }

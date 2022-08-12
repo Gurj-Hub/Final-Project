@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import Header from "./Header";
-import NavBar from "./NavBar";
+import InitialNavBar from "./InitialNavBar";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Intro from "./Intro";
 import Abundance from "./InitialNavBar/Abundance";
@@ -12,7 +13,7 @@ import Other from "./InitialNavBar/Other";
 import HomepageOut from "./Homepage-OUT";
 import HomepageIn from "./Homepage-OUT";
 import Calculator from "./Calculator";
-import Breakdown from "./Breakdown";
+import Conversion from "./Conversion";
 import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
@@ -26,7 +27,7 @@ const App = () => {
       <GlobalStyles />
       <Wrapper>
         <Header />
-        {header !== "Homepage" ? <NavBar /> : null}
+        {header !== "Homepage" ? <InitialNavBar /> : <Navbar />}
         <Container>
           <Routes>
             <Route path="/" element={<Intro />} />
@@ -35,9 +36,9 @@ const App = () => {
             <Route path="/cost" element={<Cost />} />
             <Route path="/other" element={<Other />} />
             <Route path="/calculator" element={<Calculator />} />
-            <Route path="/breakdown" element={<Breakdown />} />
+            <Route path="/conversion" element={<Conversion />} />
             <Route
-              path="/Homepage"
+              path="/homepage"
               element={loggedIn ? <HomepageIn /> : <HomepageOut />}
             />
           </Routes>

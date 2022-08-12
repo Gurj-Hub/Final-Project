@@ -1,9 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { UserDataContext } from "./UserDataContext";
 
 export const ProductDataContext = createContext(null);
 
 export const ProductDataProvider = ({ children }) => {
   // sets state of header depending on session storage
+  const { logged } = useContext(UserDataContext);
   const headerState = sessionStorage.getItem("header");
   //stores all of the energy consuming products inside db
   const [allProducts, setAllProducts] = useState(null);

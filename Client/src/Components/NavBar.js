@@ -1,40 +1,29 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { ProductDataContext } from "./ProductDataContext";
+import { UserDataContext } from "./UserDataContext";
 import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-//Path links to specific categories in Navbar
-const NavBar = () => {
-  const { header, setHeader } = useContext(ProductDataContext);
+const Navbar = () => {
+  const { loggedIn } = useContext(UserDataContext);
 
   return (
     <Wrapper>
       <Nav>
-        <Options onClick={() => setHeader("Abundance")} to="/abundance">
-          Abundance
-        </Options>
+        <Options to="/homepage">Homepage</Options>
       </Nav>
       <Nav>
-        <Options onClick={() => setHeader("Efficiency")} to="/efficiency">
-          Efficiency
-        </Options>
+        <Options to="/calculator">Solar Load Calculator</Options>
       </Nav>
-      <Nav>
-        <Options onClick={() => setHeader("Cost")} to="/cost">
-          Cost
-        </Options>
-      </Nav>
-      <Nav>
-        <Options onClick={() => setHeader("Other")} to="/other">
-          Other
-        </Options>
-      </Nav>
+      {loggedIn ? (
+        <Nav>
+          <Options to="/conversion">Load Conversion</Options>
+        </Nav>
+      ) : null}
     </Wrapper>
   );
 };
 
-export default NavBar;
+export default Navbar;
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,7 +38,7 @@ const Nav = styled.div`
   justify-content: center;
   width: 100%;
   height: 40px;
-  background-color: black;
+  background-color: rgb(0, 102, 255);
   border-bottom: 1px solid white;
   border-top: 1px solid white;
 `;
@@ -68,6 +57,6 @@ const Options = styled(NavLink)`
     color: yellowgreen;
   }
   &.active {
-    color: rgb(102, 255, 153);
+    color: rgb(255, 133, 51);
   }
 `;
