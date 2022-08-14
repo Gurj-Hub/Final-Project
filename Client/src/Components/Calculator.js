@@ -17,6 +17,8 @@ const Calculator = () => {
       ? new Array(10).fill(1)
       : JSON.parse(localStorage.getItem("items"))
   );
+  //flag for re-rendering after resetting appliances
+  const [isReset, setIsReset] = useState(false);
   //to navigate to solar breakdown + incentive page
   const navigate = useNavigate();
   // for storing kWh total
@@ -75,13 +77,14 @@ const Calculator = () => {
                     <Select
                       onChange={(ev) => {
                         HandleChange(ev.target.value, index);
+                        setIsReset(false);
                       }}
                     >
                       {" "}
-                      {localStorage.getItem("items") !== null ? (
+                      {isReset ? (
                         <Option selected>Select</Option>
                       ) : (
-                        <Option selected>Select</Option>
+                        <Option>Select</Option>
                       )}
                       {localStorage.getItem("items") !== null
                         ? allProducts.map((element, productIndex) => {
@@ -109,6 +112,7 @@ const Calculator = () => {
                     </Select>
                   </ApplianceContainer>
                   <ConsumptionContainer>
+                    {" "}
                     {typeof arr[index] === "object" ? arr[index]?.kWh : 0}
                   </ConsumptionContainer>
                   <TimeConsumedContainer>
@@ -165,6 +169,7 @@ const Calculator = () => {
                 onClick={() => {
                   setArr(new Array(10).fill(1));
                   localStorage.removeItem("items");
+                  setIsReset(!isReset);
                 }}
               >
                 {" "}

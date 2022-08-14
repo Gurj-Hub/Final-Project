@@ -7,13 +7,15 @@ import { FiLoader } from "react-icons/fi";
 const Conversion = () => {
   const { loggedIn, savedData, location, setLocation } =
     useContext(UserDataContext);
-  const { incentives, panelData, monthlyKWH } = useContext(ProductDataContext);
+  const { incentives, panelData, monthlyKWH, costPerKWH } =
+    useContext(ProductDataContext);
 
   if (incentives !== null && panelData !== null) {
     const ObjEntriesIncentives = Object.keys(incentives);
     for (let x = 0; x <= 2; x++) {
       ObjEntriesIncentives.shift();
     }
+    ObjEntriesIncentives.unshift("Select");
 
     return (
       <>
@@ -23,7 +25,7 @@ const Conversion = () => {
           calculated costs do not take into account the cost of
           installation/labour.***
         </Div>
-        <LearnMoreContainer>
+        <SectionBlock>
           <Instruc>Select your province/territory :</Instruc>
           <Select
             onChange={(ev) => {
@@ -34,11 +36,14 @@ const Conversion = () => {
               return <Option value={element}>{element}</Option>;
             })}
           </Select>
-        </LearnMoreContainer>
-        <LearnMoreContainer>
+        </SectionBlock>
+        <SectionBlock>
           <HoldingPanelData>
             <Instruc>
-              Cost per panel: <Span>{panelData.AVGcostPerPanel} $</Span>
+              <Span>Solar Panel Data</Span>
+            </Instruc>
+            <Instruc>
+              Cost per panel: ~<Span>{panelData.AVGcostPerPanel} $</Span>
             </Instruc>
             <Instruc>
               Wattage produced/day:{" "}
@@ -47,35 +52,64 @@ const Conversion = () => {
           </HoldingPanelData>
           <SubContainer>
             <TotalKWH>Consumed kW/h Per Month</TotalKWH>
-            <Container>{monthlyKWH}</Container>
+            <Container>{monthlyKWH.toPrecision(4)}</Container>
           </SubContainer>
-        </LearnMoreContainer>
+        </SectionBlock>
         <Calculation>
           <BreakdownContainer>
             To meet your monthly consumption of{" "}
-            <Span>&nbsp;{monthlyKWH}&nbsp;</Span> kW/h, you will need{" "}
+            <Span>&nbsp;{monthlyKWH.toPrecision(4)}&nbsp;</Span> kW/h, you will
+            need{" "}
             <Span>
               &nbsp;
-              {(monthlyKWH / (panelData.AVGproductionPerDay * 30)).toPrecision(
-                4
+              {Math.ceil(
+                (monthlyKWH / (panelData.AVGproductionPerDay * 30)).toPrecision(
+                  4
+                )
               )}
               &nbsp;
-            </Span>{" "}
+            </Span>
             panels.
           </BreakdownContainer>
-          <BreakdownContainer></BreakdownContainer>
+          <BreakdownContainer>
+            For&nbsp;
+            <Span>
+              {Math.ceil(
+                (monthlyKWH / (panelData.AVGproductionPerDay * 30)).toPrecision(
+                  4
+                )
+              )}
+            </Span>
+            &nbsp;panels, you will need a minimum upfront cost of{" "}
+            <Span>
+              &nbsp;
+              {Math.ceil(
+                (monthlyKWH / (panelData.AVGproductionPerDay * 30)).toPrecision(
+                  4
+                )
+              ) * panelData.AVGcostPerPanel}
+              &nbsp;
+            </Span>
+            $.
+          </BreakdownContainer>
           <IncentiveContainer>
             <Incentive>
-              <IncentiveTilte>Federal Incentive</IncentiveTilte>
-              The deferal incentive is blablablablabl ablablablablablabla
-              blablablablabla blablablab lablabla blablab lablablablablablabla
-              blabla blabla blabla
+              <IncentiveTilte>Federal Incentive (Canada wide)</IncentiveTilte>
+              {incentives.Federal}
             </Incentive>
             <Incentive>
               <IncentiveTilte>Regional Incentive</IncentiveTilte>
+              {incentives[location]}
             </Incentive>
           </IncentiveContainer>
         </Calculation>
+        <BreakdownBlock>
+          For the same energy consumption of
+          <Span>&nbsp;{monthlyKWH.toPrecision(4)}&nbsp;</Span> kW/h over a month
+          in <Span>&nbsp;{location}&nbsp;</Span>, you could expect to pay{" "}
+          {(costPerKWH[location] * monthlyKWH).toPrecision(4)} $ for your
+          standard energy bill.{" "}
+        </BreakdownBlock>
       </>
     );
   } else {
@@ -109,10 +143,10 @@ const Icon = styled.div`
 
 const Incentive = styled.div`
   display: flex;
-  justify-content: center;
   flex-direction: column;
   text-align: center;
   width: 400px;
+  height: 300px;
 `;
 
 const IncentiveTilte = styled.span`
@@ -121,6 +155,8 @@ const IncentiveTilte = styled.span`
   font-weight: 800;
   padding: 5px;
   color: rgb(179, 0, 179);
+  text-decoration: underline;
+  margin-bottom: 10px;
 `;
 
 const IncentiveContainer = styled.div`
@@ -135,6 +171,7 @@ const BreakdownContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  padding: 10px;
 `;
 
 const TotalKWH = styled.div``;
@@ -142,16 +179,15 @@ const TotalKWH = styled.div``;
 const Calculation = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 80%;
-  height: 200px;
+  height: 400px;
   margin: auto;
-  padding: 25px;
+  margin-top: 15px;
   font-size: 20px;
   font-family: Lucida Console;
 `;
 
-const LearnMoreContainer = styled.div`
+const SectionBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,6 +199,13 @@ const LearnMoreContainer = styled.div`
   border: 2px solid rgb(255, 133, 51);
   margin: auto;
   margin-top: 30px;
+`;
+
+const BreakdownBlock = styled(SectionBlock)`
+  display: inline-block;
+  margin-left: 28%;
+  margin-top: 0px;
+  margin-bottom: 50px;
 `;
 
 const Instruc = styled.div`
