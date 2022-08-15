@@ -6,6 +6,8 @@ const LogButton = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
     useAuth0();
 
+  console.log("user", user);
+  console.log("authent", isAuthenticated);
   if (isAuthenticated) {
     return (
       <Button onClick={() => logout({ returnTo: window.location.origin })}>

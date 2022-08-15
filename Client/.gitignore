@@ -9,6 +9,7 @@
 .history/
  
 # Common credential files
+.env
 **/credentials.json
 **/client_secrets.json
 **/client_secret.json
