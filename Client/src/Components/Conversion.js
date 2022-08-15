@@ -5,8 +5,7 @@ import { UserDataContext } from "./UserDataContext";
 import { FiLoader } from "react-icons/fi";
 
 const Conversion = () => {
-  const { loggedIn, savedData, location, setLocation } =
-    useContext(UserDataContext);
+  const { loggedIn, location, setLocation } = useContext(UserDataContext);
   const { incentives, panelData, monthlyKWH, costPerKWH } =
     useContext(ProductDataContext);
 
@@ -103,13 +102,43 @@ const Conversion = () => {
             </Incentive>
           </IncentiveContainer>
         </Calculation>
-        <BreakdownBlock>
-          For the same energy consumption of
-          <Span>&nbsp;{monthlyKWH.toPrecision(4)}&nbsp;</Span> kW/h over a month
-          in <Span>&nbsp;{location}&nbsp;</Span>, you could expect to pay{" "}
-          {(costPerKWH[location] * monthlyKWH).toPrecision(4)} $ for your
-          standard energy bill.{" "}
-        </BreakdownBlock>
+        {location === "Select" ||
+        location === null ||
+        monthlyKWH === 0 ? null : (
+          <BreakdownBlock>
+            For the same energy consumption of
+            <Span>&nbsp;{monthlyKWH.toPrecision(4)}&nbsp;</Span> kW/h over a
+            month in <Span>&nbsp;{location}&nbsp;</Span>, you could expect to
+            pay{" "}
+            <Span>
+              &nbsp;{(costPerKWH[location] * monthlyKWH).toPrecision(4)}&nbsp;
+            </Span>{" "}
+            $ for your standard energy bill.{" "}
+          </BreakdownBlock>
+        )}
+        {location === "Select" ||
+        location === null ||
+        monthlyKWH === 0 ? null : (
+          <BreakdownBlock>
+            {" "}
+            Therefore, one would need to wait{" "}
+            <Span>
+              {(
+                (Math.ceil(
+                  (
+                    monthlyKWH /
+                    (panelData.AVGproductionPerDay * 30)
+                  ).toPrecision(4)
+                ) *
+                  panelData.AVGcostPerPanel) /
+                (costPerKWH[location] * monthlyKWH) /
+                12
+              ).toPrecision(3)}
+            </Span>{" "}
+            years to reach a breakeven point between your standard energy bill
+            payments and your upfront cost of solar.{" "}
+          </BreakdownBlock>
+        )}
       </>
     );
   } else {

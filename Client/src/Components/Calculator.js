@@ -179,7 +179,7 @@ const Calculator = () => {
           )}
         </Container>
         {monthlyKWH !== 0 && (
-          <Prompt onClick={() => navigate("/breakdown")}>
+          <Prompt onClick={() => navigate("/conversion")}>
             {" "}
             Check out how many panels you will need to cover the solar load!{" "}
           </Prompt>

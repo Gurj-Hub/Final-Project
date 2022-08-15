@@ -4,10 +4,13 @@ import { useState, useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
 import logo from "../N4S logo.png";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogButton from "./LoggingButton";
 
 const Header = () => {
   const { header } = useContext(ProductDataContext);
   const { loggedIn } = useContext(UserDataContext);
+  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
 
   if (header === "WHY") {
     return <Wrapper> Why Should You Consider Solar?</Wrapper>;
@@ -32,7 +35,7 @@ const Header = () => {
             <Span>N4S </Span>: Need For Solar
           </Title>
         </Wrap>
-        <Login>How do I send to - Login In - ?</Login>
+        <Login>{<LogButton />}</Login>
       </Container>
     );
   }
@@ -53,7 +56,7 @@ const Img = styled.img`
 `;
 
 const Login = styled.span`
-  font-size: 20px;
+  /* font-size: 20px; */
   padding-right: 15px;
 `;
 

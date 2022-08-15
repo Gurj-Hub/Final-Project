@@ -5,13 +5,16 @@ import { UserDataContext } from "./UserDataContext";
 import { BsArrowRight } from "react-icons/bs";
 import { FiLoader } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const HomepageOut = () => {
   const { costPerKWH, monthlyConsumption } = useContext(ProductDataContext);
-  const { loggedIn } = useContext(UserDataContext);
+  const { loggedIn, savedData } = useContext(UserDataContext);
   const [cost, setCost] = useState(null);
   const [consumption, setConsumption] = useState(null);
   const navigate = useNavigate();
+  const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
+    useAuth0();
 
   if (costPerKWH !== null && monthlyConsumption) {
     const ObjEntriesCost = Object.keys(costPerKWH);
