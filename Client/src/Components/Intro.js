@@ -1,15 +1,21 @@
 import styled, { keyframes } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { useNavigate } from "react-router-dom";
 import Bg from "../solarINTRO.jpg";
 import roof1 from "../roof1.jpg";
 import roof2 from "../roof2.jpg";
 import { AiFillCaretUp } from "react-icons/ai";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Intro = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    isAuthenticated && navigate("/homepage");
+  }, [isAuthenticated]);
 
   return (
     <>

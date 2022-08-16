@@ -3,9 +3,9 @@ import styled, { keyframes } from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const LogButton = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
-    useAuth0();
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
+  console.log(window.location.origin);
   if (isAuthenticated) {
     return (
       <>
@@ -14,6 +14,7 @@ const LogButton = () => {
           onClick={() => {
             logout({ returnTo: window.location.origin });
             localStorage.removeItem("items");
+            sessionStorage.removeItem("header");
           }}
         >
           <Span>{user.nickname.toUpperCase()}</Span>
