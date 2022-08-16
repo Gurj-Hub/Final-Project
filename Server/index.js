@@ -10,6 +10,10 @@ const {
   getMonthlyConsumption,
   getSolarPanelData,
   getCostPerKWH,
+  addUser,
+  addItems,
+  addLocation,
+  getUser,
 } = require("./handlers");
 
 const PORT = 4000;
@@ -45,10 +49,10 @@ express()
     })
   )
   //----------------------------------------------------------
-  //'initializing' Morgan
+  //'initializing' Morgan + Data sent to BE in requests
   //----------------------------------------------------------
   .use(morgan("tiny"))
-
+  .use(express.json())
   //----------------------------------------------------------
   //Endpoints
   //----------------------------------------------------------
@@ -63,18 +67,14 @@ express()
   .get("/costPerKWH", getCostPerKWH)
   //gets data for solar panels ie. cost, production rate
   .get("/solarPanelData", getSolarPanelData)
-  // checking for user authentification - subject to change
-  //   .get("/log", (req, res) => {
-  //     res.status(200).json({
-  //       status: 200,
-  //       data: req.oidc.isAuthenticated() ? "Logged in" : "Logged out",
-  //     });
-  //   })
-  //   //to check if a user is logged in
-  //   .get("/profile", requiresAuth(), (res, req) => {
-  //     console.log(req.oidc.user);
-  //     res.send(JSON.stringify(req.oidc.user));
-  //   })
+  // add user to DB
+  .post("/addUser", addUser)
+  //adds items array to user doc
+  .patch("/addSavedItems", addItems)
+  //adds location to user doc
+  .patch("/addLocation", addLocation)
+  //get infor regarding specific user
+  .get("/getUser", getUser)
 
   //POSTS user to Users collection
   //PATCHes User collection with saved location/saved products/changed costPerKWH

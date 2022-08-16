@@ -16,6 +16,7 @@ const HomepageOut = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
     useAuth0();
 
+  console.log(savedData);
   if (costPerKWH !== null && monthlyConsumption) {
     const ObjEntriesCost = Object.keys(costPerKWH);
     for (let x = 0; x <= 2; x++) {
@@ -26,11 +27,29 @@ const HomepageOut = () => {
     return (
       <>
         <ProductContainer>
-          <ProductTitle>Your Household Products</ProductTitle>
+          <ProductTitle>
+            {user ? `Welcome ${user.nickname}` : "Your Household Products"}
+          </ProductTitle>
           <ProductList>
-            {loggedIn
-              ? "Map over the users saved items"
-              : "You must be signed in to view your items."}
+            {isAuthenticated ? (
+              <ItemContainer>
+                {savedData?.map((item) => {
+                  if (typeof item === "object") {
+                    return (
+                      <ItemData>
+                        <ItemName>{item.name}</ItemName>
+                        <Div>{item.kWh} kW/h</Div>
+                        <Div>Average/month: {item.avgPerMonth}</Div>
+                      </ItemData>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+              </ItemContainer>
+            ) : (
+              "You must be signed in to view your items."
+            )}
           </ProductList>
         </ProductContainer>
         <DidYK>Did You Know?</DidYK>
@@ -145,6 +164,31 @@ const turning = keyframes`
             transform: rotate(360deg);
         }
     `;
+
+const ItemContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80%;
+  margin: auto;
+  padding: 15px;
+`;
+const ItemData = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const Div = styled.div`
+  font-size: 16px;
+  color: rgb(102, 204, 0);
+`;
+
+const ItemName = styled(Div)`
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+`;
 
 const Icon = styled.div`
   position: absolute;
@@ -274,9 +318,10 @@ const ProductTitle = styled.div`
   font-family: Lucida Console;
   font-size: 20px;
   color: rgb(0, 153, 255);
-  width: 280px;
+  width: fit-content;
   margin-bottom: 15px;
   border-bottom: 2px solid rgb(0, 153, 255);
+  text-align: center;
 `;
 const ProductContainer = styled.div`
   display: flex;

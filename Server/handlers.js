@@ -181,10 +181,169 @@ const getCostPerKWH = async (req, res) => {
   }
 };
 
+//--------------------------------------------------------------------
+//adding user to DB
+//--------------------------------------------------------------------
+const addUser = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const userObj = req.body;
+
+  try {
+    const db = await client.db("N4S");
+
+    // checks if user already exists
+    const validateUser = await db
+      .collection("Users")
+      .findOne({ _id: userObj.email });
+
+    if (validateUser !== null) {
+      return res.status(200).json({
+        status: 200,
+        data: validateUser,
+        message: `Database already contains user with email "${userObj.email}".`,
+      });
+    } else {
+      //adds user to DB after checking he doesnt exist
+      const adding = await db
+        .collection("Users")
+        .insertOne({ _id: userObj.email, user: userObj });
+
+      return res.status(404).json({
+        status: 202,
+        data: adding,
+        message: `User with e-mail "${userObj.email}" was successfully added to database.`,
+      });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
+};
+
+//--------------------------------------------------------------------
+//adding items to User document
+//--------------------------------------------------------------------
+const addItems = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const userEmail = req.body.email;
+  const items = req.body.items;
+
+  try {
+    const db = await client.db("N4S");
+
+    // checks if user already exists
+    const validateUser = await db
+      .collection("Users")
+      .findOne({ _id: userEmail });
+
+    if (validateUser !== null) {
+      await db
+        .collection("Users")
+        .updateOne({ _id: userEmail }, { $set: { savedItems: items } });
+
+      return res.status(200).json({
+        status: 200,
+        data: items,
+        message: `Items were added to user with email "${userEmail}".`,
+      });
+    } else {
+      return res.status(404).json({
+        status: 404,
+        data: req.body,
+        message: `User with e-mail "${userEmail}" was not found in database.`,
+      });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
+};
+
+//--------------------------------------------------------------------
+//adding location to User document
+//--------------------------------------------------------------------
+const addLocation = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const userEmail = req.body.email;
+  const location = req.body.location;
+
+  try {
+    const db = await client.db("N4S");
+
+    // checks if user already exists
+    const validateUser = await db
+      .collection("Users")
+      .findOne({ _id: userEmail });
+
+    if (validateUser !== null) {
+      await db
+        .collection("Users")
+        .updateOne({ _id: userEmail }, { $set: { location: location } });
+
+      return res.status(200).json({
+        status: 200,
+        data: req.body,
+        message: `Location ${location} was added to user with email "${userEmail}".`,
+      });
+    } else {
+      return res.status(404).json({
+        status: 404,
+        data: req.body,
+        message: `User with e-mail "${userEmail}" was not found in database.`,
+      });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
+};
+
+//--------------------------------------------------------------------
+//getting User from Db based on email
+//--------------------------------------------------------------------
+const getUser = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const userEmail = req.body.email;
+
+  try {
+    const db = await client.db("N4S");
+
+    // checks if user already exists
+    const validateUser = await db
+      .collection("Users")
+      .findOne({ _id: userEmail });
+
+    if (validateUser === null) {
+      return res.status(200).json({
+        status: 404,
+        data: null,
+        message: `User with e-mail "${userEmail}" was not found in database.`,
+      });
+    } else {
+      return res.status(404).json({
+        status: 200,
+        data: validateUser,
+        message: `User with e-mail "${userEmail}" was successfully found in database.`,
+      });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
+};
+
 module.exports = {
   getAllProducts,
   getAllIncentives,
   getMonthlyConsumption,
   getSolarPanelData,
   getCostPerKWH,
+  addUser,
+  addItems,
+  addLocation,
+  getUser,
 };

@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { UserDataContext } from "./UserDataContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const ProductDataContext = createContext(null);
 
 export const ProductDataProvider = ({ children }) => {
   // sets state of header depending on session storage
-  const { logged } = useContext(UserDataContext);
+  const { isAuthenticated } = useAuth0();
   const headerState = sessionStorage.getItem("header");
   //stores all of the energy consuming products inside db
   const [allProducts, setAllProducts] = useState(null);
