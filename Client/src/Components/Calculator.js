@@ -14,7 +14,8 @@ const Calculator = () => {
     useContext(ProductDataContext);
   //make an array to map over to create rows for appliances
   const [arr, setArr] = useState(
-    localStorage.getItem("items") === null
+    localStorage.getItem("items") === null ||
+      localStorage.getItem("items") === "undefined"
       ? new Array(10).fill(1)
       : JSON.parse(localStorage.getItem("items"))
   );
