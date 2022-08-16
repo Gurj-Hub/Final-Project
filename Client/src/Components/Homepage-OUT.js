@@ -9,14 +9,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const HomepageOut = () => {
   const { costPerKWH, monthlyConsumption } = useContext(ProductDataContext);
-  const { loggedIn, savedData } = useContext(UserDataContext);
+  const { savedData } = useContext(UserDataContext);
   const [cost, setCost] = useState(null);
   const [consumption, setConsumption] = useState(null);
   const navigate = useNavigate();
-  const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
-    useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
-  console.log(savedData);
   if (costPerKWH !== null && monthlyConsumption) {
     const ObjEntriesCost = Object.keys(costPerKWH);
     for (let x = 0; x <= 2; x++) {
@@ -28,7 +26,9 @@ const HomepageOut = () => {
       <>
         <ProductContainer>
           <ProductTitle>
-            {user ? `Welcome ${user.nickname}` : "Your Household Products"}
+            {user
+              ? `${user.nickname}'s Household Products`
+              : "Your Household Products"}
           </ProductTitle>
           <ProductList>
             {isAuthenticated ? (
@@ -39,7 +39,7 @@ const HomepageOut = () => {
                       <ItemData>
                         <ItemName>{item.name}</ItemName>
                         <Div>{item.kWh} kW/h</Div>
-                        <Div>Average/month: {item.avgPerMonth}</Div>
+                        <Div>avgKWH/month: {item.avgPerMonth}</Div>
                       </ItemData>
                     );
                   } else {
@@ -169,9 +169,10 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  width: 80%;
+  width: 100%;
   margin: auto;
   padding: 15px;
+  flex: wrap;
 `;
 const ItemData = styled.div`
   display: flex;
@@ -182,11 +183,12 @@ const ItemData = styled.div`
 const Div = styled.div`
   font-size: 16px;
   color: rgb(102, 204, 0);
+  text-align: center;
 `;
 
 const ItemName = styled(Div)`
   color: white;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 `;
 

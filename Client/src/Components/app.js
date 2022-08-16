@@ -16,11 +16,9 @@ import Calculator from "./Calculator";
 import Conversion from "./Conversion";
 import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
-import { UserDataContext } from "./UserDataContext";
 
 const App = () => {
   const { header } = useContext(ProductDataContext);
-  const { loggedIn } = useContext(UserDataContext);
 
   return (
     <Router>
@@ -37,10 +35,7 @@ const App = () => {
             <Route path="/other" element={<Other />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/conversion" element={<Conversion />} />
-            <Route
-              path="/homepage"
-              element={loggedIn ? <HomepageIn /> : <HomepageOut />}
-            />
+            <Route path="/homepage" element={<HomepageOut />} />
           </Routes>
         </Container>
         {header !== "Homepage" ? <Footer /> : null}

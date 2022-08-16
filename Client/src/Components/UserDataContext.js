@@ -1,34 +1,43 @@
 import { createContext, useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const UserDataContext = createContext(null);
 
 export const UserDataProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(true);
   //stores data about appliances for calculator
   const [savedData, setSavedData] = useState(null);
   //stores user location
   const [location, setLocation] = useState(null);
+  //to trigger useEffect and send user email
+  const { user, isAuthenticated } = useAuth0();
 
-  //checking if somebody is logged in with localStorage
+  // adds new User to DB
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")) !== null) {
-      setLoggedIn(true);
-    }
-  }, []);
+    fetch("/addUser", {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, [isAuthenticated]);
 
-  //get saved items if logged in ---- needs an endpoint
-  // useEffect(() => {
-  //   fetch("/monthlyConsumption")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setSavedData(data.data);
-  //     });
-  // }, []);
+  // get saved items if logged-in
+  useEffect(() => {
+    fetch(`/getUser/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        localStorage.setItem("items", JSON.stringify(data.data.savedItems));
+        setSavedData(data.data.savedItems);
+        setLocation(data.data.location);
+      });
+  }, [isAuthenticated]);
 
   return (
     <UserDataContext.Provider
       value={{
-        loggedIn,
         savedData,
         setSavedData,
         location,

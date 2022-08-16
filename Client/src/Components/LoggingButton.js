@@ -6,14 +6,19 @@ const LogButton = () => {
   const { loginWithRedirect, logout, user, isAuthenticated, isLoading } =
     useAuth0();
 
-  console.log(isAuthenticated);
-  console.log(user);
-
   if (isAuthenticated) {
     return (
-      <Button onClick={() => logout({ returnTo: window.location.origin })}>
-        Log Out
-      </Button>
+      <>
+        <span>Welcome </span>
+        <Button
+          onClick={() => {
+            logout({ returnTo: window.location.origin });
+            localStorage.removeItem("items");
+          }}
+        >
+          <Span>{user.nickname.toUpperCase()}</Span>
+        </Button>
+      </>
     );
   } else {
     return <Button onClick={() => loginWithRedirect()}>Log In</Button>;
@@ -32,5 +37,14 @@ const Button = styled.button`
 
   &:hover {
     color: yellowgreen;
+  }
+`;
+const Span = styled.span`
+  font-size: 22px;
+  color: yellow;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
   }
 `;

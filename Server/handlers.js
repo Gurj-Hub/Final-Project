@@ -284,7 +284,7 @@ const addLocation = async (req, res) => {
 
       return res.status(200).json({
         status: 200,
-        data: req.body,
+        data: req.body.location,
         message: `Location ${location} was added to user with email "${userEmail}".`,
       });
     } else {
@@ -306,7 +306,7 @@ const addLocation = async (req, res) => {
 //--------------------------------------------------------------------
 const getUser = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
-  const userEmail = req.body.email;
+  const userEmail = req.params.email;
 
   try {
     const db = await client.db("N4S");

@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
+import { ProductDataContext } from "./ProductDataContext";
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth0();
+  const { monthlyKWH } = useContext(ProductDataContext);
 
   return (
     <Wrapper>
@@ -14,7 +14,7 @@ const Navbar = () => {
       <Nav>
         <Options to="/calculator">Solar Load Calculator</Options>
       </Nav>
-      {isAuthenticated ? (
+      {monthlyKWH ? (
         <Nav>
           <Options to="/conversion">Load Conversion</Options>
         </Nav>

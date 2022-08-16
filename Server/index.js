@@ -73,8 +73,8 @@ express()
   .patch("/addSavedItems", addItems)
   //adds location to user doc
   .patch("/addLocation", addLocation)
-  //get infor regarding specific user
-  .get("/getUser", getUser)
+  //get information regarding specific user
+  .get("/getUser/:email", getUser)
 
   //POSTS user to Users collection
   //PATCHes User collection with saved location/saved products/changed costPerKWH

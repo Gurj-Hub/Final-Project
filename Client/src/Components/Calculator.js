@@ -5,12 +5,13 @@ import { UserDataContext } from "./UserDataContext";
 import { FiLoader, FiRefreshCcw } from "react-icons/fi";
 import { AiOutlineSave } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Calculator = () => {
-  const { loggedIn, savedData, setSavedData } = useContext(UserDataContext);
+  const { user } = useAuth0();
+  const { savedData, setSavedData } = useContext(UserDataContext);
   const { allProducts, monthlyKWH, setMonthlyKWH } =
     useContext(ProductDataContext);
-  const { logged } = useContext(UserDataContext);
   //make an array to map over to create rows for appliances
   const [arr, setArr] = useState(
     localStorage.getItem("items") === null
@@ -48,14 +49,19 @@ const Calculator = () => {
     setSavedData(arr);
   };
 
-  //saves appliance data in state + storage and sends state to BE to store in db ********************************************************************************************************************
+  //saves appliance data in state + storage and sends state to BE to store in DB
   const HandleSave = () => {
     setSavedData(arr);
     localStorage.setItem("items", JSON.stringify(arr));
-    /* HAS TO DO A POST HERE TO STORE DATA ABOUT SAVED APPLIANCES FOR LOGGED IN USER 
-    if(logged) {
-    do fetch POST
-    }*/
+    fetch("/addSavedItems", {
+      method: "PATCH",
+      body: JSON.stringify({ email: user?.email, items: arr }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+      });
   };
 
   if (arr !== null && allProducts !== null) {

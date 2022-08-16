@@ -3,11 +3,28 @@ import { useContext, useState, useEffect } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
 import { FiLoader } from "react-icons/fi";
+import { useAuth0, User } from "@auth0/auth0-react";
 
 const Conversion = () => {
-  const { loggedIn, location, setLocation } = useContext(UserDataContext);
+  const { location, setLocation } = useContext(UserDataContext);
+  const { user, isAuthenticated } = useAuth0();
   const { incentives, panelData, monthlyKWH, costPerKWH } =
     useContext(ProductDataContext);
+
+  const HandleLocation = (ev) => {
+    setLocation(ev.target.value);
+    if (isAuthenticated) {
+      fetch("/addLocation", {
+        method: "PATCH",
+        body: JSON.stringify({ email: user?.email, location: ev.target.value }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLocation(data.data);
+        });
+    }
+  };
 
   if (incentives !== null && panelData !== null) {
     const ObjEntriesIncentives = Object.keys(incentives);
@@ -27,8 +44,9 @@ const Conversion = () => {
         <SectionBlock>
           <Instruc>Select your province/territory :</Instruc>
           <Select
+            defaultValue={location ? location : null}
             onChange={(ev) => {
-              setLocation(ev.target.value);
+              HandleLocation(ev);
             }}
           >
             {ObjEntriesIncentives.map((element, index) => {
