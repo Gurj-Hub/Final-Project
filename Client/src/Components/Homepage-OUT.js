@@ -101,7 +101,7 @@ const HomepageOut = () => {
           {cost ? (
             <CostOuput>
               The cost per kW/h for region <Span>{`${cost}`}</Span> is{" "}
-              <Span>{`${costPerKWH[cost]}`}</Span> $.
+              <Span>{`${cost === "Select" ? 0 : costPerKWH[cost]}`}</Span> $.
             </CostOuput>
           ) : (
             <Span>SELECT A REGION!</Span>
@@ -110,7 +110,10 @@ const HomepageOut = () => {
             <ConsumptionOutput>
               The average residential consumption for region{" "}
               <Span>{`${consumption}`}</Span> is{" "}
-              <Span>{`${monthlyConsumption[cost]}`}</Span> kW/h.
+              <Span>{`${
+                cost === "Select" ? 0 : monthlyConsumption[cost]
+              }`}</Span>{" "}
+              kW/h.
             </ConsumptionOutput>
           ) : null}
         </LearnMoreContainer>

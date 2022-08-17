@@ -65,6 +65,14 @@ const Calculator = () => {
       });
   };
 
+  //deletes saved appliance data in savedData state and local storage -> DELAY WHEN CALLING IN THE HANDLER! -> hence not being used
+  const HandleReset = () => {
+    setArr(new Array(10).fill(1));
+    localStorage.removeItem("items");
+    setIsReset(!isReset);
+    setSavedData(new Array(10).fill(1));
+  };
+
   if (arr !== null && allProducts !== null) {
     return (
       <>
@@ -177,6 +185,7 @@ const Calculator = () => {
                   setArr(new Array(10).fill(1));
                   localStorage.removeItem("items");
                   setIsReset(!isReset);
+                  setSavedData(new Array(10).fill(1));
                 }}
               >
                 {" "}

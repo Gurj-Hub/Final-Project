@@ -122,6 +122,7 @@ const Conversion = () => {
         </Calculation>
         {location === "Select" ||
         location === null ||
+        location === undefined ||
         monthlyKWH === 0 ? null : (
           <BreakdownBlock>
             For the same energy consumption of
@@ -136,6 +137,7 @@ const Conversion = () => {
         )}
         {location === "Select" ||
         location === null ||
+        location === undefined ||
         monthlyKWH === 0 ? null : (
           <BreakdownBlock>
             {" "}
