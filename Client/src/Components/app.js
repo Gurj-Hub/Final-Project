@@ -11,7 +11,6 @@ import Efficiency from "./InitialNavBar/Efficiency";
 import Cost from "./InitialNavBar/Cost";
 import Other from "./InitialNavBar/Other";
 import HomepageOut from "./Homepage-OUT";
-import HomepageIn from "./Homepage-OUT";
 import Calculator from "./Calculator";
 import Conversion from "./Conversion";
 import { useContext } from "react";
