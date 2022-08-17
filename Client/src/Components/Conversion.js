@@ -1,9 +1,9 @@
 import styled, { keyframes } from "styled-components";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import { UserDataContext } from "./UserDataContext";
 import { FiLoader } from "react-icons/fi";
-import { useAuth0, User } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Conversion = () => {
   const { location, setLocation } = useContext(UserDataContext);

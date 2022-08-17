@@ -1,17 +1,13 @@
 import styled, { keyframes } from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
-import { UserDataContext } from "./UserDataContext";
 import logo from "../N4S logo.png";
-import { useAuth0 } from "@auth0/auth0-react";
 import LogButton from "./LoggingButton";
 
 const Header = () => {
   const { header } = useContext(ProductDataContext);
-  const { loggedIn } = useContext(UserDataContext);
-  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
 
+  //conditionally renders header based on header state
   if (header === "WHY") {
     return <Wrapper> Why Should You Consider Solar?</Wrapper>;
   }
@@ -25,7 +21,7 @@ const Header = () => {
     return <PopUp3> As Demand Increases, the Cost Goes Down</PopUp3>;
   }
   if (header === "Other") {
-    return <PopUp4> Many More Benefits</PopUp4>;
+    return <PopUp4> The Future is... Bright</PopUp4>;
   } else {
     return (
       <Container>
