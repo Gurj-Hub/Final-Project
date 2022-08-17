@@ -32,7 +32,6 @@ export const UserDataProvider = ({ children }) => {
         localStorage.setItem("items", JSON.stringify(data.data.savedItems));
         setSavedData(data.data.savedItems);
         setLocation(data.data.location);
-        console.log(savedData);
       });
   }, [isAuthenticated]);
 
