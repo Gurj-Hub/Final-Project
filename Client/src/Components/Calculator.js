@@ -47,7 +47,7 @@ const Calculator = () => {
     let copyArr = [...arr];
     copyArr[index] = filtered;
     setArr(copyArr);
-    setSavedData(arr);
+    // setSavedData(arr);
   };
 
   //saves appliance data in state + storage and sends state to BE to store in DB
