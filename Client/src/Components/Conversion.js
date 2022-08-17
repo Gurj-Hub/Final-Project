@@ -192,7 +192,7 @@ const Incentive = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 400px;
+  width: 600px;
   height: 300px;
 `;
 
