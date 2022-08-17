@@ -3,9 +3,11 @@ import { useContext } from "react";
 import { ProductDataContext } from "./ProductDataContext";
 import logo from "../N4S logo.png";
 import LogButton from "./LoggingButton";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const { header } = useContext(ProductDataContext);
+  const navigate = useNavigate();
 
   //conditionally renders header based on header state
   if (header === "WHY") {
@@ -27,7 +29,7 @@ const Header = () => {
       <Container>
         <Wrap>
           <Img src={logo}></Img>
-          <Title>
+          <Title onClick={() => navigate("/homepage")}>
             <Span>N4S </Span>: Need For Solar
           </Title>
         </Wrap>
@@ -64,6 +66,11 @@ const Span = styled.span`
 
 const Title = styled.span`
   font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const Container = styled.div`
@@ -80,7 +87,7 @@ const fade = keyframes`
 
         100% {
           opacity: 1;
-          transform: translateX(34%)
+          transform: translateX(38%)
         }
     `;
 
@@ -91,8 +98,8 @@ const Wrapper = styled.div`
   align-items: center;
   color: white;
   font-size: 34px;
-  font-family: Lucida Console;
-  font-weight: 700;
+  font-family: Stencil Std, fantasy;
+  /* font-weight: 700; */
   animation: ${fade} 3000ms forwards;
   margin-bottom: 15px;
   margin-top: 15px;
