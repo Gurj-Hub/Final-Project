@@ -15,14 +15,18 @@ const HomepageOut = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth0();
 
+  //removes first 2 keys to only leave the provincial values
   if (costPerKWH !== null && monthlyConsumption) {
     const ObjEntriesCost = Object.keys(costPerKWH);
     for (let x = 0; x <= 2; x++) {
       ObjEntriesCost.shift();
     }
 
+    // adds "select" to the beginning of dropdown
     ObjEntriesCost.unshift("Select");
+
     return (
+      //conditionally renders the users saved products, name
       <>
         <ProductContainer>
           <ProductTitle>
@@ -52,6 +56,9 @@ const HomepageOut = () => {
             )}
           </ProductList>
         </ProductContainer>
+
+        {/* ***************displays the interactive provincial consumption/costPerKWH********************** */}
+
         <DidYK>Did You Know?</DidYK>
         <Wrapper>
           <CostAVG>

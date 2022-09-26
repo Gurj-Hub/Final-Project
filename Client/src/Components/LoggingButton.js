@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const LogButton = () => {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
+  // conditionally renders the log-in button and resets the local/session storage
   if (isAuthenticated) {
     return (
       <>

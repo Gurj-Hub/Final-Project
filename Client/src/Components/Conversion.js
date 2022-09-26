@@ -5,12 +5,14 @@ import { UserDataContext } from "./UserDataContext";
 import { FiLoader } from "react-icons/fi";
 import { useAuth0 } from "@auth0/auth0-react";
 
+//gives the user a breakdown of their consumption and their solar needs to meet their electrical needs
 const Conversion = () => {
   const { location, setLocation } = useContext(UserDataContext);
   const { user, isAuthenticated } = useAuth0();
   const { incentives, panelData, monthlyKWH, costPerKWH } =
     useContext(ProductDataContext);
 
+  //sets location for incentives, changes user's location in database upon selecting location from dropdown
   const HandleLocation = (ev) => {
     setLocation(ev.target.value);
     if (isAuthenticated) {
@@ -26,11 +28,13 @@ const Conversion = () => {
     }
   };
 
+  //removes first 2 keys to only leave the provincial values
   if (incentives !== null && panelData !== null) {
     const ObjEntriesIncentives = Object.keys(incentives);
     for (let x = 0; x <= 2; x++) {
       ObjEntriesIncentives.shift();
     }
+    // adds "select" to the beginning of dropdown
     ObjEntriesIncentives.unshift("Select");
 
     return (
